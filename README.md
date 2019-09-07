@@ -1,4 +1,8 @@
-﻿# Marlin 3D Printer Firmware
+# Ender 3 - BIGTREETECH-SKR-mini-E3
+
+Merged https://github.com/bigtreetech/BIGTREETECH-SKR-mini-E3-/tree/master/firmware into this and adapted to my Ender 3 needs.
+
+# Marlin 3D Printer Firmware
 
 [![Build Status](https://travis-ci.org/MarlinFirmware/Marlin.svg?branch=bugfix-2.0.x)](https://travis-ci.org/MarlinFirmware/Marlin)
 ![GitHub](https://img.shields.io/github/license/marlinfirmware/marlin.svg)
