@@ -2,6 +2,13 @@
 
 Merged https://github.com/bigtreetech/BIGTREETECH-SKR-mini-E3-/tree/master/firmware into this and adapted to my Ender 3 needs.
 
+## Necessary Files to compare
+
+* platformio.ini (BIGTREE_SKR_MINI --> STM32F103R_bigtree)
+  - buildroot/share/PlatformIO/scripts/STM32F1_SKR_MINI.py
+  - Marlin/src/HAL/HAL_STM32F1/build_flags.py
+  - 
+
 # Marlin 3D Printer Firmware
 
 [![Build Status](https://travis-ci.org/MarlinFirmware/Marlin.svg?branch=bugfix-2.0.x)](https://travis-ci.org/MarlinFirmware/Marlin)
