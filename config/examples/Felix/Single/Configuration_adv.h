@@ -518,7 +518,11 @@
 // Homing hits each endstop, retracts by these distances, then does a slower bump.
 #define X_HOME_BUMP_MM 5
 #define Y_HOME_BUMP_MM 5
+<<<<<<< HEAD
+#define Z_HOME_BUMP_MM 2
+=======
 #define Z_HOME_BUMP_MM 3
+>>>>>>> upstream/bugfix-2.0.x
 #define HOMING_BUMP_DIVISOR { 2, 2, 4 }  // Re-Bump Speed Divisor (Divides the Homing Feedrate)
 //#define QUICK_HOME                     // If homing includes X and Y, do a diagonal move initially
 //#define HOMING_BACKOFF_MM { 2, 2, 2 }  // (mm) Move away from the endstops after homing
@@ -603,18 +607,42 @@
 //#define Z_STEPPER_AUTO_ALIGN
 #if ENABLED(Z_STEPPER_AUTO_ALIGN)
   // Define probe X and Y positions for Z1, Z2 [, Z3]
+<<<<<<< HEAD
+<<<<<<< HEAD:config/examples/Felix/Single/Configuration_adv.h
   #define Z_STEPPER_ALIGN_XY { {  10, 290 }, { 150,  10 }, { 290, 290 } }  // Set number of iterations to align
+=======
+=======
+>>>>>>> upstream/bugfix-2.0.x
+  #define Z_STEPPER_ALIGN_XY { {  10, 290 }, { 150,  10 }, { 290, 290 } }
+
+  // Provide Z stepper positions for more rapid convergence in bed alignment.
+  // Currently requires triple stepper drivers.
+  //#define Z_STEPPER_ALIGN_KNOWN_STEPPER_POSITIONS
+  #if ENABLED(Z_STEPPER_ALIGN_KNOWN_STEPPER_POSITIONS)
+    // Define Stepper XY positions for Z1, Z2, Z3 corresponding to
+    // the Z screw positions in the bed carriage.
+    // Define one position per Z stepper in stepper driver order.
+    #define Z_STEPPER_ALIGN_STEPPER_XY { { 210.7, 102.5 }, { 152.6, 220.0 }, { 94.5, 102.5 } }
+  #else
+    // Amplification factor. Used to scale the correction step up or down.
+    // In case the stepper (spindle) position is further out than the test point.
+    // Use a value > 1. NOTE: This may cause instability
+    #define Z_STEPPER_ALIGN_AMP 1.0
+  #endif
+
+  // Set number of iterations to align
+<<<<<<< HEAD
+>>>>>>> upstream/bugfix-2.0.x:config/examples/Wanhao/Duplicator i3 2.1/Configuration_adv.h
+=======
+>>>>>>> upstream/bugfix-2.0.x
   #define Z_STEPPER_ALIGN_ITERATIONS 3
+
   // Enable to restore leveling setup after operation
   #define RESTORE_LEVELING_AFTER_G34
 
   // On a 300mm bed a 5% grade would give a misalignment of ~1.5cm
   #define G34_MAX_GRADE  5  // (%) Maximum incline G34 will handle
 
-  // Use the amplification factor to de-/increase correction step.
-  // In case the stepper (spindle) position is further out than the test point
-  // Use a value > 1. NOTE: This may cause instability
-  #define Z_STEPPER_ALIGN_AMP 1.0
   // Stop criterion. If the accuracy is better than this stop iterating early
   #define Z_STEPPER_ALIGN_ACC 0.02
 #endif
@@ -635,7 +663,11 @@
 // Default stepper release if idle. Set to 0 to deactivate.
 // Steppers will shut down DEFAULT_STEPPER_DEACTIVE_TIME seconds after the last move when DISABLE_INACTIVE_? is true.
 // Time can be set by M18 and M84.
+<<<<<<< HEAD
+#define DEFAULT_STEPPER_DEACTIVE_TIME 120
+=======
 #define DEFAULT_STEPPER_DEACTIVE_TIME 60
+>>>>>>> upstream/bugfix-2.0.x
 #define DISABLE_INACTIVE_X true
 #define DISABLE_INACTIVE_Y true
 #define DISABLE_INACTIVE_Z true  // Set to false if the nozzle will fall down on your printed part when print has finished.
@@ -888,6 +920,18 @@
 // Add an 'M73' G-code to set the current percentage
 //#define LCD_SET_PROGRESS_MANUALLY
 
+<<<<<<< HEAD
+=======
+// Show the E position (filament used) during printing
+//#define LCD_SHOW_E_TOTAL
+
+#if HAS_GRAPHICAL_LCD && HAS_PRINT_PROGRESS
+  //#define PRINT_PROGRESS_SHOW_DECIMALS // Show progress with decimal digits
+  //#define SHOW_REMAINING_TIME          // Display estimated time to completion
+  //#define ROTATE_PROGRESS_DISPLAY      // Display (P)rogress, (E)lapsed, and (R)emaining time
+#endif
+
+>>>>>>> upstream/bugfix-2.0.x
 #if HAS_CHARACTER_LCD && HAS_PRINT_PROGRESS
   //#define LCD_PROGRESS_BAR              // Show a progress bar on HD44780 LCDs for SD printing
   #if ENABLED(LCD_PROGRESS_BAR)
@@ -1151,7 +1195,11 @@
   //#define STATUS_ALT_FAN_BITMAP     // Use the alternative fan bitmap
   //#define STATUS_FAN_FRAMES 3       // :[0,1,2,3,4] Number of fan animation frames
   //#define STATUS_HEAT_PERCENT       // Show heating in a progress bar
+<<<<<<< HEAD
+  #define BOOT_MARLIN_LOGO_SMALL    // Show a smaller Marlin logo on the Boot Screen (saving 399 bytes of flash)
+=======
   //#define BOOT_MARLIN_LOGO_SMALL    // Show a smaller Marlin logo on the Boot Screen (saving 399 bytes of flash)
+>>>>>>> upstream/bugfix-2.0.x
   //#define BOOT_MARLIN_LOGO_ANIMATED // Animated Marlin logo. Costs ~‭3260 (or ~940) bytes of PROGMEM.
 
   // Frivolous Game Options
@@ -1204,6 +1252,10 @@
   //#define TOUCH_UI_PORTRAIT
   //#define TOUCH_UI_MIRRORED
 
+<<<<<<< HEAD
+<<<<<<< HEAD:config/examples/Felix/Single/Configuration_adv.h
+=======
+>>>>>>> upstream/bugfix-2.0.x
   // UTF8 processing and rendering.
   // Unsupported characters are shown as '?'.
   //#define TOUCH_UI_USE_UTF8
@@ -1236,6 +1288,22 @@
   //#define LCD_LANGUAGE_3 de
   //#define LCD_LANGUAGE_4 es
   //#define LCD_LANGUAGE_5 it
+<<<<<<< HEAD
+=======
+  // Enable UTF8 rendering capabilities.
+  //#define TOUCH_UI_USE_UTF8
+  #if ENABLED(TOUCH_UI_USE_UTF8)
+    #define TOUCH_UI_UTF8_WESTERN_CHARSET
+  #endif
+
+  // When labels do not fit buttons, use smaller font
+  #define TOUCH_UI_FIT_TEXT
+
+  // Runtime language selection (otherwise LCD_LANGUAGE)
+  //#define TOUCH_UI_LANGUAGE_MENU
+>>>>>>> upstream/bugfix-2.0.x:config/examples/Wanhao/Duplicator i3 2.1/Configuration_adv.h
+=======
+>>>>>>> upstream/bugfix-2.0.x
 
   // Use a numeric passcode for "Screen lock" keypad.
   // (recommended for smaller displays)
@@ -1287,7 +1355,8 @@
   //#define BABYSTEP_WITHOUT_HOMING
   //#define BABYSTEP_XY                     // Also enable X/Y Babystepping. Not supported on DELTA!
   #define BABYSTEP_INVERT_Z false           // Change if Z babysteps should go the other way
-  #define BABYSTEP_MULTIPLICATOR  1         // Babysteps are very small. Increase for faster motion.
+  #define BABYSTEP_MULTIPLICATOR_Z  1       // Babysteps are very small. Increase for faster motion.
+  #define BABYSTEP_MULTIPLICATOR_XY 1
 
   //#define DOUBLECLICK_FOR_Z_BABYSTEPPING  // Double-click on the Status Screen for Z Babystepping.
   #if ENABLED(DOUBLECLICK_FOR_Z_BABYSTEPPING)
@@ -1497,7 +1566,11 @@
 
 // The ASCII buffer for serial input
 #define MAX_CMD_SIZE 96
+<<<<<<< HEAD
+#define BUFSIZE 32
+=======
 #define BUFSIZE 4
+>>>>>>> upstream/bugfix-2.0.x
 
 // Transmission to Host Buffer Size
 // To save 386 bytes of PROGMEM (and TX_BUFFER_SIZE+3 bytes of RAM) set to 0.
@@ -1506,7 +1579,11 @@
 // For debug-echo: 128 bytes for the optimal speed.
 // Other output doesn't need to be that speedy.
 // :[0, 2, 4, 8, 16, 32, 64, 128, 256]
+<<<<<<< HEAD
+#define TX_BUFFER_SIZE 32
+=======
 #define TX_BUFFER_SIZE 0
+>>>>>>> upstream/bugfix-2.0.x
 
 // Host Receive Buffer Size
 // Without XON/XOFF flow control (see SERIAL_XON_XOFF below) 32 bytes should be enough.
@@ -2036,6 +2113,8 @@
    *
    * IMPROVE_HOMING_RELIABILITY tunes acceleration and jerk when
    * homing and adds a guard period for endstop triggering.
+   *
+   * TMC2209 requires STEALTHCHOP enabled for SENSORLESS_HOMING
    */
   //#define SENSORLESS_HOMING // StallGuard capable drivers only
 
@@ -2511,8 +2590,13 @@
   #define USER_DESC_4 "Heat Bed/Home/Level"
   #define USER_GCODE_4 "M140 S" STRINGIFY(PREHEAT_2_TEMP_BED) "\nG28\nG29"
 
+<<<<<<< HEAD
+  #define USER_DESC_5 "Home & Info"
+  #define USER_GCODE_5 "G28\nM503"
+=======
   //#define USER_DESC_5 "Home & Info"
   //#define USER_GCODE_5 "G28\nM503"
+>>>>>>> upstream/bugfix-2.0.x
 #endif
 
 /**
@@ -2533,6 +2617,13 @@
 #if ENABLED(HOST_ACTION_COMMANDS)
   //#define HOST_PROMPT_SUPPORT
 #endif
+
+/**
+ * Cancel Objects
+ *
+ * Implement M486 to allow Marlin to skip objects
+ */
+//#define CANCEL_OBJECTS
 
 /**
  * I2C position encoders for closed loop control.

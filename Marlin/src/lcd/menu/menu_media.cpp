@@ -31,13 +31,6 @@
 #include "menu.h"
 #include "../../sd/cardreader.h"
 
-#if !PIN_EXISTS(SD_DETECT)
-  void lcd_sd_refresh() {
-    encoderTopLine = 0;
-    card.mount();
-  }
-#endif
-
 void lcd_sd_updir() {
   ui.encoderPosition = card.cdup() ? ENCODER_STEPS_PER_MENU_ITEM : 0;
   encoderTopLine = 0;
@@ -86,17 +79,20 @@ inline void sdcard_start_selected_file() {
     char buffer[strlen(longest) + 2];
     buffer[0] = ' ';
     strcpy(buffer + 1, longest);
-    do_select_screen(
-      PSTR(MSG_BUTTON_PRINT), PSTR(MSG_BUTTON_CANCEL),
+    MenuItem_confirm::select_screen(
+      GET_TEXT(MSG_BUTTON_PRINT), GET_TEXT(MSG_BUTTON_CANCEL),
       sdcard_start_selected_file, ui.goto_previous_screen,
-      PSTR(MSG_START_PRINT), buffer, PSTR("?")
+      GET_TEXT(MSG_START_PRINT), buffer, PSTR("?")
     );
   }
 
 #endif
 
-class MenuItem_sdfile {
+class MenuItem_sdfile : public MenuItem_sdbase {
   public:
+    static inline void draw(const bool sel, const uint8_t row, PGM_P const pstr, CardReader &theCard) {
+      MenuItem_sdbase::draw(sel, row, pstr, theCard, false);
+    }
     static void action(PGM_P const pstr, CardReader &) {
       #if ENABLED(SD_REPRINT_LAST_SELECTED_FILE)
         // Save menu state for the selected file
@@ -113,8 +109,11 @@ class MenuItem_sdfile {
     }
 };
 
-class MenuItem_sdfolder {
+class MenuItem_sdfolder : public MenuItem_sdbase {
   public:
+    static inline void draw(const bool sel, const uint8_t row, PGM_P const pstr, CardReader &theCard) {
+      MenuItem_sdbase::draw(sel, row, pstr, theCard, true);
+    }
     static void action(PGM_P const, CardReader &theCard) {
       card.cd(theCard.filename);
       encoderTopLine = 0;
@@ -141,11 +140,11 @@ void menu_media() {
   BACK_ITEM(MSG_MAIN);
   if (card.flag.workDirIsRoot) {
     #if !PIN_EXISTS(SD_DETECT)
-      ACTION_ITEM(LCD_STR_REFRESH MSG_REFRESH, lcd_sd_refresh);
+      ACTION_ITEM(MSG_REFRESH, []{ encoderTopLine = 0; card.mount(); });
     #endif
   }
   else if (card.isMounted())
-    ACTION_ITEM(LCD_STR_FOLDER "..", lcd_sd_updir);
+    ACTION_ITEM_P(PSTR(LCD_STR_FOLDER ".."), lcd_sd_updir);
 
   if (ui.should_draw()) for (uint16_t i = 0; i < fileCnt; i++) {
     if (_menuLineNr == _thisItemNr) {
